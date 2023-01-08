@@ -1,4 +1,4 @@
-import hijack from "./hijack";
+import hijack from './hijack';
 
 export default {
   hijack,

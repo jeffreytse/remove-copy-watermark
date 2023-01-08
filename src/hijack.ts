@@ -4,20 +4,20 @@ const checkWatermark = (
   callback: (watermark?: string) => void
 ) => {
   let data: string;
-  if ((event.clipboardData?.types || []).indexOf("text/plain") < 0) {
-    data = window.getSelection()?.toString() || "";
+  if ((event.clipboardData?.types || []).indexOf('text/plain') < 0) {
+    data = window.getSelection()?.toString() || '';
   } else {
-    data = event.clipboardData?.getData("text/plain") || "";
+    data = event.clipboardData?.getData('text/plain') || '';
   }
 
   setTimeout(() => {
-    const oriData: string = window.getSelection()?.toString() || "";
+    const oriData: string = window.getSelection()?.toString() || '';
     const extData: string = data.substring(oriData.length);
     if (extData.length === 0) {
       return;
     }
     const tmpData: string = extData.toLowerCase();
-    const hasWatermark = keywords.some((keyword) => tmpData.includes(keyword));
+    const hasWatermark = keywords.some(keyword => tmpData.includes(keyword));
     callback && callback(hasWatermark ? extData : undefined);
   });
 };
@@ -26,19 +26,19 @@ const removeWatermark = (event: ClipboardEvent) => {
   const target = event.target;
   const injectCopy = (event: Event) => {
     event.stopPropagation();
-    target?.removeEventListener("copy", injectCopy);
+    target?.removeEventListener('copy', injectCopy);
   };
-  target?.addEventListener("copy", injectCopy);
-  document.execCommand("copy", true);
+  target?.addEventListener('copy', injectCopy);
+  document.execCommand('copy', true);
 };
 
 const copyHandler = (keywords: string[]) => {
   const handler = (event: ClipboardEvent) => {
-    checkWatermark(keywords, event, (watermark) => {
+    checkWatermark(keywords, event, watermark => {
       if (!watermark) {
         return;
       }
-      console.log("Remove Copy From Watermark!\n" + watermark);
+      console.log('Remove Copy From Watermark!\n' + watermark);
       removeWatermark(event);
     });
   };
@@ -46,22 +46,22 @@ const copyHandler = (keywords: string[]) => {
 };
 
 const hijack = () => {
-  console.log("Hijack Remove Copy Watermark...");
+  console.log('Hijack Remove Copy Watermark...');
 
   const handler = copyHandler([
-    "copyright",
-    "版权",
-    "著作権",
-    "版權",
-    "저작권",
-    "Авторские права",
+    'copyright',
+    '版权',
+    '著作権',
+    '版權',
+    '저작권',
+    'Авторские права',
     window.location.href,
   ]);
 
   const addEventListener: typeof window.addEventListener &
     typeof document.addEventListener = window.addEventListener;
 
-  addEventListener("copy", handler);
+  addEventListener('copy', handler);
 };
 
 export default hijack;
