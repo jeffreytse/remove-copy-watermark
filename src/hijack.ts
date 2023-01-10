@@ -1,5 +1,5 @@
 const checkWatermark = (
-  keywords: string[],
+  keywords: (string | RegExp)[],
   event: ClipboardEvent,
   callback: (watermark?: string) => void
 ) => {
@@ -17,7 +17,7 @@ const checkWatermark = (
       return;
     }
     const tmpData: string = extData.toLowerCase();
-    const hasWatermark = keywords.some(keyword => tmpData.includes(keyword));
+    const hasWatermark = keywords.some(keyword => tmpData.search(keyword));
     callback && callback(hasWatermark ? extData : undefined);
   });
 };
@@ -32,7 +32,7 @@ const removeWatermark = (event: ClipboardEvent) => {
   document.execCommand('copy', true);
 };
 
-const copyHandler = (keywords: string[]) => {
+const copyHandler = (keywords: (string | RegExp)[]) => {
   const handler = (event: ClipboardEvent) => {
     checkWatermark(keywords, event, watermark => {
       if (!watermark) {
@@ -45,18 +45,20 @@ const copyHandler = (keywords: string[]) => {
   return handler;
 };
 
-const hijack = () => {
+const hijack = (keywords?: (string | RegExp)[]) => {
   console.log('Hijack Remove Copy Watermark...');
 
-  const handler = copyHandler([
-    'copyright',
-    '版权',
-    '著作権',
-    '版權',
-    '저작권',
-    'Авторские права',
-    window.location.href,
-  ]);
+  const handler = copyHandler(
+    keywords || [
+      'copyright',
+      '版权',
+      '著作権',
+      '版權',
+      '저작권',
+      'Авторские права',
+      window.location.href,
+    ]
+  );
 
   const addEventListener: typeof window.addEventListener &
     typeof document.addEventListener = window.addEventListener;
