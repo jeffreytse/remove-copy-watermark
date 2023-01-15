@@ -12,7 +12,7 @@ const checkWatermark = (
 
   setTimeout(() => {
     const oriData: string = window.getSelection()?.toString() || '';
-    const extData: string = data.substring(oriData.length);
+    const extData: string = data.substring(oriData.length || data.length);
     if (extData.length === 0) {
       return;
     }
