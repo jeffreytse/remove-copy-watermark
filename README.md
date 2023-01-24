@@ -37,7 +37,7 @@ have to manually remove those annoying little tails after pasting.
 
 Supports:
 
-- [x] TamperMonkey Script
+- [x] [TamperMonkey Script](https://greasyfork.org/en/scripts/458549-remove-copy-watermark)
 - [ ] Chrome Extension
 - ...
 
@@ -76,6 +76,6 @@ This library relies on both [Selection](https://developer.mozilla.org/en-US/docs
 
 ## License
 
-This theme is licensed under the [MIT license](https://opensource.org/licenses/mit-license.php) © JeffreyTse.
+This theme is licensed under the [MIT license](https://opensource.org/licenses/mit-license.php) © Jeffrey Tse.
 
 <!-- External links -->
