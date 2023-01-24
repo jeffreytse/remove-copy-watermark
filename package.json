@@ -1,6 +1,6 @@
 {
   "name": "remove-copy-watermark",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Remove copyright watermark appended to the end of copied content",
   "main": "index.js",
   "scripts": {
